@@ -1,0 +1,161 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    //intitializations 
+    string switching;
+    char ans;
+    int n = 0, i = 0, x, ct = 0, ct1 = 0, y, xy =1;
+    //Book information
+    string BooksTitle[3] = { "Crime and Punishment", "Descent of Man", "Think and Grow Rich" };
+    string AuthorName[3] = { "Fyodor Dostoevsky", "Charles Darwin", "Napoleon Hill" };
+    int IBAN[100] = { 1111, 1112, 1113, 1114 };
+    int PublishingYear[100] = { 2009, 2010, 2011, 2012 };
+    int edition[100] = { 1,3,2,4 };
+    int price[100] = { 150, 200, 100 };
+    int quantity[100] = { 5,4,10 };
+    //Student information
+    string Name[3] = { "Name1", "Name2", "Name3" };
+    string Gender[3] = { "Male", "Female", "Male" };
+    int RollNo[100] = { 0001, 0002, 0003 };
+    int age[100] = { 18,19,21 };
+    //End of the data
+    while (n != 5) {
+    cout << "Press 1 to issue a book." << endl;
+    cout << "Press 2 to return a book." << endl;
+    cout << "Press 3 to display all details of Books." << endl;
+    cout << "Press 4 to display detail of students." << endl;
+    cout << "Press 5 to exit." << endl;
+    cin >> n;
+        if (n == 1) {
+            cout << "Enter the IBAN to search the book : "; cin >> x;
+            while (xy ==1 ){
+            for (int i = 0; i < 3; i++) {
+                if (IBAN[i] == x) {
+                    ct++;
+                    if (quantity[i] > 1) {
+                        cout << "The name of your book is : " << BooksTitle[i];
+                        cout << "\n Author Name : " << AuthorName[i];
+                        cout << "\n IBAN : " << IBAN[i];
+                        cout << "\n Publishing Year : " << PublishingYear[i];
+                        cout << "\n Edition : " << edition[i];
+                        quantity[i] = quantity[i] - 1;
+                        cout << "\n Remaining quantity is : " << quantity[i] ;
+                        cout << "\n Price : " << price[i]<<endl ;
+                    }
+                    else if (quantity[i] == 1) {
+                        cout << "We can't issue you the book as there's only 1 book remaining"<<endl;
+                    }
+               }
+            }if (ct !=0){break;}
+            if (ct == 0 ) {cout << "Sorry, IBAN is incorrect.\n Enter IBAN again . ";
+                cin>>x;
+            }}
+        }
+        if (n == 2) {
+            cout << "Enter the IBAN of the book you're returning : "; cin >> y;
+            for (int i = 0; i < 3; i++) {
+                ct1++; 
+                if (IBAN[i] == y) {
+                    if (quantity[i] > 1) {
+                        cout << "The book you're returning is : " << BooksTitle[i];
+                        cout << "\n Author Name : " << AuthorName[i];
+                        cout << "\n IBAN : " << IBAN[i] ;
+                        cout << "\n Publishing Year : " << PublishingYear[i];
+                        cout << "\n Edition : " << edition[i];
+                        quantity[i] = quantity[i] + 1;
+                        cout << "\n Now quantity is : " << quantity[i] ;
+                        cout << "\n Price : " << price[i] << endl;
+                    }
+                }
+            }
+            if (ct1 == 0) { cout << "Sorry,IBAN is incorrect ." << endl; }
+        }
+        if (n == 3) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = i + 1; j < 3; j++) {
+                    if (price[i] > price[j]) {
+                        price[j] = price[i] + price[j];
+                        price[i] = price[j] - price[i];
+                        price[j] = price[j] - price[i];
+                        //title switch 
+                        switching = BooksTitle[i];
+                        BooksTitle[i] = BooksTitle[j];
+                        BooksTitle[j] = switching;
+                        //author name switch 
+                        switching = AuthorName[i];
+                        AuthorName[i] = AuthorName[j];
+                        AuthorName[j] = switching;
+                        // iban 
+                        IBAN[j] = IBAN[i] + IBAN[j];
+                        IBAN[i] = IBAN[j] - IBAN[i];
+                        IBAN[j] = IBAN[j] - IBAN[i];
+                        //PUBLISHING YEAR Switching
+                        PublishingYear[j] = PublishingYear[i] + PublishingYear[j];
+                        PublishingYear[i] = PublishingYear[j] - PublishingYear[i];
+                        PublishingYear[j] = PublishingYear[j] - PublishingYear[i];
+                        // QUANTITY
+                        quantity[j] = quantity[i] + quantity[j];
+                        quantity[i] = quantity[j] - quantity[i];
+                        quantity[j] = quantity[j] - quantity[i];
+                        //EDITION 
+                        edition[j] = edition[i] + edition[j];
+                        edition[i] = edition[j] - edition[i];
+                        edition[j] = edition[j] - edition[i];
+
+                    }
+                }
+            }
+            cout << "  Details of all the books :  "<<endl;
+            for (int i = 0; i < 3; i++) {
+                cout<< "Book Title : " << BooksTitle[i] << "\n  Price : " << price[i]<< "\n  IBAN : " << IBAN[i]  << "\n  Publishing Year : " << PublishingYear[i]<< "\n  Edition : " << edition[i] << "\n  Quantity : " << quantity[i] <<endl;
+
+
+            }
+        }
+
+
+        if (n == 4) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = i + 1; j < 3; j++) {
+                    if (age[i] > age[j]) {//age sorting 
+                        age[j] = age[i] + age[j];
+                        age[i] = age[j] - age[i];
+                        age[j] = age[j] - age[i];
+                        // name sorting
+                        switching = Name[i];
+                        Name[i] =Name[j];
+                        Name[j] = switching;
+
+                        //gender sorting
+                        switching = Gender[i];
+                        Gender[i] = Gender[j];
+                        Gender[j] = switching;
+
+                        // roll number sorting 
+                        RollNo[j] = RollNo[i] + RollNo[j];
+                        RollNo[i] = RollNo[j] - RollNo[i];
+                        RollNo[j] = RollNo[j] - RollNo[i];
+
+                    }
+                }
+            }
+            cout << "   Details of students : "<<endl;
+            for (int i = 0; i < 3; i++) {
+                cout << "Name : " << Name[i] << "\n  Gender : " << Gender[i] << "\n  RollNo : " << RollNo[i] << "\n  Age : " << age[i]  <<endl;
+            }
+        } if (n != 5){
+          cout<<"Do you want to quit ? Y/y or N/n ";
+          cin>>ans;
+         if (ans == 'y'|| ans == 'Y'){
+            break;
+         }
+            
+        }
+        
+    }
+
+    return 0;
+
+}
